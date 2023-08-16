@@ -1,0 +1,26 @@
+specVersion: 0.0.2
+description: Omni Subgraph Test
+repository: https://github.com/zikyfranky/usdt-subgraph
+schema:
+  file: ./omni.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Transfer
+    network: optimism
+    source:
+      address: "0x012cAEb558DfFc053a6A092835a1e7F5c8EeBA8b"
+      abi: OMNI
+      startBlock: 108301685
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./mapping/transfer.ts
+      entities:
+        - Transfer
+      abis:
+        - name: OMNI
+          file: ./abis/OMNI.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
